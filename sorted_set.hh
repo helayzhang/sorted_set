@@ -53,7 +53,8 @@ private:
     typedef typename KeyScoreVecType::const_iterator KeyScoreVecTypeConstIterator;
 private:
     static const int SKIPLIST_MAXLEVEL = 32;
-    static const double SKIPLIST_P = 0.25;
+    // Fix for compile problems before C++11 compiler
+    //static constexpr double SKIPLIST_P = 0.25;
     class SkipListNode;
     class SkipListLevel;
     class RangeSpec;
@@ -65,7 +66,7 @@ private:
     int randomlevel() 
     {
         int level = 1;
-        while ((random()&0xFFFF) < (SKIPLIST_P * 0xFFFF))
+        while ((random()&0xFFFF) < (0.25/*SKIPLIST_P*/ * 0xFFFF))
             level += 1;
         return (level<SKIPLIST_MAXLEVEL) ? level : SKIPLIST_MAXLEVEL;
     }
